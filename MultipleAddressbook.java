@@ -80,7 +80,7 @@ public class MultipleAddressbook {
 
 	    }			
 		}
-		private void addAddressbook() {
+		void addAddressbook() {
 			Scanner scannerObject = null;
 			String bookName = scannerObject.next();
 

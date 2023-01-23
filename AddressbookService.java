@@ -1,8 +1,11 @@
 package com.day25_CSV;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -442,6 +445,40 @@ public class AddressbookService {
 		                e.printStackTrace();
 		            } catch (IOException e) {
 		                e.printStackTrace();
+		            }
+		        }
+		    }
+		 
+		 public void writeDataToJson() throws IOException {
+
+		        String fileName = "./" + this.getAddressBookName() + ".json";
+		        Path filePath = Paths.get(fileName);
+		        Gson gson = new Gson();
+		        HashMap<String, ArrayList<PersonContact>> contact;
+				String json = gson.toJson(contact.values());
+		        FileWriter writer = new FileWriter(String.valueOf(filePath));
+		        writer.write(json);
+		        writer.close(); 
+
+		    } public void readDataFromJson() throws IOException {
+
+		        ArrayList<PersonContact> contactList;
+		        String fileName = "./" + this.getAddressBookName() + ".json";
+		        Path filePath = Paths.get(fileName);
+
+		        try (Reader reader = Files.newBufferedReader(filePath)) {
+		            Gson gson = new Gson();
+		            contactList = new ArrayList<>(Arrays.asList(gson.fromJson(reader, PersonContact[].class)));
+		            for (PersonContact contact : contactList) {
+		                System.out.println("{");
+		                System.out.println("Firstname : " + contact.getFirstName());
+		                System.out.println("Lastname : " + contact.getLastName());
+		                System.out.println("City : " + contact.getCity());
+		                System.out.println("State : " + contact.getState());
+		                System.out.println("Zip Code : " + contact.getZip());
+		                System.out.println("Phone number : " + contact.getPhoneNumber());
+		                System.out.println("Email : " + contact.getEmail());
+		                System.out.println("}\n");
 		            }
 		        }
 		    }
